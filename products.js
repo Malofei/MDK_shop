@@ -1,6 +1,6 @@
 // products.js
 // Каталог G&E Store.
-// Файл сгенерирован ботом 19.09.2026 13:27. Правки удобнее делать через бота:
+// Файл сгенерирован ботом 19.09.2026 21:30. Правки удобнее делать через бота:
 // он пересоберёт этот файл целиком и приложит картинки.
 
 const CATEGORIES = [
@@ -25,20 +25,20 @@ const PRODUCTS = [
     theme: "berserk",
     price: 7000,
     sizes: [
-        "S",
-        "M",
-        "L",
-        "XL",
-        "XXL"
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
     ],
     images: [
-        "images/hoodie1.jpg",
-        "images/hoddie2.jpg",
-        "images/hoddie3.jpg",
-        "images/hoddie4.jpg",
-        "images/hoodie5.jpg",
-        "images/hoodie6.jpg",
-        "images/hoodie7.jpg"
+      "images/hoodie1.jpg",
+      "images/hoddie2.jpg",
+      "images/hoddie3.jpg",
+      "images/hoddie4.jpg",
+      "images/hoodie5.jpg",
+      "images/hoodie6.jpg",
+      "images/hoodie7.jpg"
     ],
   },
   {
@@ -48,21 +48,21 @@ const PRODUCTS = [
     theme: "berserk",
     price: 7000,
     sizes: [
-        "S",
-        "M",
-        "L",
-        "XL",
-        "XXL"
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
     ],
     images: [
-        "images/hoddie_grif_1.jpg",
-        "images/hoddie_grif_2.jpg",
-        "images/hoddie_grif_3.jpg",
-        "images/hoddie_grif_4.jpg",
-        "images/hoddie_grif_5.jpg",
-        "images/hoddie_grif_6.jpg",
-        "images/hoddie_grif_7.jpg",
-        "images/hoddie_grif_8.jpg"
+      "images/hoddie_grif_1.jpg",
+      "images/hoddie_grif_2.jpg",
+      "images/hoddie_grif_3.jpg",
+      "images/hoddie_grif_4.jpg",
+      "images/hoddie_grif_5.jpg",
+      "images/hoddie_grif_6.jpg",
+      "images/hoddie_grif_7.jpg",
+      "images/hoddie_grif_8.jpg"
     ],
   },
   {
@@ -72,17 +72,17 @@ const PRODUCTS = [
     theme: "berserk",
     price: 4600,
     sizes: [
-        "S",
-        "M",
-        "L",
-        "XL",
-        "XXL"
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
     ],
     images: [
-        "images/tshka_berserk_1.jpg",
-        "images/tshka_berserk_2.jpg",
-        "images/tshka_berserk_3.jpg",
-        "images/tshka_berserk_4.jpg"
+      "images/tshka_berserk_1.jpg",
+      "images/tshka_berserk_2.jpg",
+      "images/tshka_berserk_3.jpg",
+      "images/tshka_berserk_4.jpg"
     ],
   },
   {
@@ -92,15 +92,15 @@ const PRODUCTS = [
     theme: "berserk",
     price: 3000,
     sizes: [
-        "S",
-        "M",
-        "L",
-        "XL",
-        "XXL"
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
     ],
     images: [
-        "images/tshka_grif_1.jpg",
-        "images/tshka_grif_2.jpg"
+      "images/tshka_grif_1.jpg",
+      "images/tshka_grif_2.jpg"
     ],
   },
   {
@@ -110,15 +110,15 @@ const PRODUCTS = [
     theme: "berserk",
     price: 3600,
     sizes: [
-        "S",
-        "M",
-        "L",
-        "XL",
-        "XXL"
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
     ],
     images: [
-        "images/tshka_berserk_21.jpg",
-        "images/tshka_berserk_22.jpg"
+      "images/tshka_berserk_21.jpg",
+      "images/tshka_berserk_22.jpg"
     ],
   },
   {
@@ -128,17 +128,17 @@ const PRODUCTS = [
     theme: "witcher",
     price: 4000,
     sizes: [
-        "S",
-        "M",
-        "L",
-        "XL",
-        "XXL"
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
     ],
     images: [
-        "images/tshka_witcher_1.jpg",
-        "images/tshka_witcher_2.jpg",
-        "images/tshka_witcher_3.jpg",
-        "images/tshka_witcher_4.jpg"
+      "images/tshka_witcher_1.jpg",
+      "images/tshka_witcher_2.jpg",
+      "images/tshka_witcher_3.jpg",
+      "images/tshka_witcher_4.jpg"
     ],
   },
   {
@@ -148,17 +148,17 @@ const PRODUCTS = [
     theme: "bleach",
     price: 4500,
     sizes: [
-        "S",
-        "M",
-        "L",
-        "XL",
-        "XXL"
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
     ],
     images: [
-        "images/tshka_urahara_1.jpg",
-        "images/tshka_urahara_2.jpg",
-        "images/tshka_urahara_3.jpg",
-        "images/tshka_urahara_4.jpg"
+      "images/tshka_urahara_1.jpg",
+      "images/tshka_urahara_2.jpg",
+      "images/tshka_urahara_3.jpg",
+      "images/tshka_urahara_4.jpg"
     ],
   },
   {
@@ -168,17 +168,17 @@ const PRODUCTS = [
     theme: "bleach",
     price: 4500,
     sizes: [
-        "S",
-        "M",
-        "L",
-        "XL",
-        "XXL"
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
     ],
     images: [
-        "images/tshka_kyoraku_1.jpg",
-        "images/tshka_kyoraku_2.jpg",
-        "images/tshka_kyoraku_3.jpg",
-        "images/tshka_kyoraku_4.jpg"
+      "images/tshka_kyoraku_1.jpg",
+      "images/tshka_kyoraku_2.jpg",
+      "images/tshka_kyoraku_3.jpg",
+      "images/tshka_kyoraku_4.jpg"
     ],
   },
   {
@@ -188,17 +188,17 @@ const PRODUCTS = [
     theme: "dmc",
     price: 4500,
     sizes: [
-        "S",
-        "M",
-        "L",
-        "XL",
-        "XXL"
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
     ],
     images: [
-        "images/tshka_dmc_1.jpg",
-        "images/tshka_dmc_2.jpg",
-        "images/tshka_dmc_3.jpg",
-        "images/tshka_dmc_4.jpg"
+      "images/tshka_dmc_1.jpg",
+      "images/tshka_dmc_2.jpg",
+      "images/tshka_dmc_3.jpg",
+      "images/tshka_dmc_4.jpg"
     ],
   },
   {
@@ -208,17 +208,37 @@ const PRODUCTS = [
     theme: "jujutsu",
     price: 4500,
     sizes: [
-        "S",
-        "M",
-        "L",
-        "XL",
-        "XXL"
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
     ],
     images: [
-        "images/tshka_higuruma.png",
-        "images/tshka_higuruma2.png",
-        "images/tshka_higuruma3.png",
-        "images/tshka_higuruma4.png"
+      "images/tshka_higuruma.png",
+      "images/tshka_higuruma2.png",
+      "images/tshka_higuruma3.png",
+      "images/tshka_higuruma4.png"
+    ],
+  },
+  {
+    id: 11,
+    name: "Футболка Toji Fushiguro",
+    category: "tshirts",
+    theme: "jujutsu",
+    price: 4000,
+    sizes: [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    images: [
+      "images/futbolka-toji-fushiguro-11-1.jpg",
+      "images/futbolka-toji-fushiguro-11-2.jpg",
+      "images/futbolka-toji-fushiguro-11-3.jpg",
+      "images/futbolka-toji-fushiguro-11-4.jpg"
     ],
   },
 ];
