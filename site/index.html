@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MDKStore — футболки и худи по манге и аниме</title>
+<meta name="description" content="Футболки и худи с принтами по «Берсерку», «Бличу», Devil May Cry, «Ведьмаку» и Jujutsu Kaisen. Печать в Санкт-Петербурге, доставка по городу включена в цену.">
+<meta name="theme-color" content="#121014">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="G&E Store">
+<meta property="og:description" content="Футболки и худи по мотивам манги, аниме и игр. Санкт-Петербург.">
+<meta property="og:image" content="images/tshka_berserk_1.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">К содержимому</a>
+
+<header class="masthead">
+  <div class="masthead__bar shell">
+    <a class="wordmark" href="#/" aria-label="MDKStore, на главную">
+      <span class="wordmark__mark">MDK</span>
+      <span class="wordmark__word">Store</span>
+    </a>
+
+    <nav class="mainnav" aria-label="Разделы магазина">
+      <a href="#/catalog">Каталог</a>
+      <a href="#/catalog/tshirts">Футболки</a>
+      <a href="#/catalog/hoodies">Худи</a>
+      <a href="#/collections">Коллекции</a>
+      <a href="#/about">О магазине</a>
+    </nav>
+
+    <div class="masthead__tools">
+      <button class="icon-btn" id="themeToggle" type="button" aria-label="Переключить тему">
+        <span aria-hidden="true" id="themeIcon">☾</span>
+      </button>
+      <button class="cart-btn" id="cartToggle" type="button" aria-label="Открыть корзину">
+        Корзина
+        <span class="cart-btn__count" id="cartCount" hidden>0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ГЛАВНАЯ -->
+  <section class="view" id="view-home" hidden>
+    <div class="hero shell">
+      <div class="hero__text">
+        <h1 class="hero__title">Носить то,<br>что перечитываешь</h1>
+        <p class="hero__lede">
+          Футболки и худи с принтами по «Берсерку», «Бличу», Devil May Cry,
+          «Ведьмаку» и Jujutsu Kaisen. Печатаем в Петербурге небольшими партиями.
+        </p>
+        <p class="hero__note">Доставка по Санкт-Петербургу уже в цене.</p>
+        <div class="hero__actions">
+          <a class="btn btn--solid" href="#/catalog">Смотреть каталог</a>
+          <a class="btn btn--ghost" href="#/collections">Выбрать коллекцию</a>
+        </div>
+      </div>
+      <div class="hero__panels" id="heroPanels" aria-hidden="true"></div>
+    </div>
+
+    <section class="shell band">
+      <div class="band__head">
+        <h2>Коллекции</h2>
+        <a class="textlink" href="#/collections">Все коллекции</a>
+      </div>
+      <div class="collection-rail" id="homeCollections"></div>
+    </section>
+
+    <section class="shell band">
+      <div class="band__head">
+        <h2>Новое в каталоге</h2>
+        <a class="textlink" href="#/catalog">Весь каталог</a>
+      </div>
+      <div class="grid" id="homeProducts"></div>
+    </section>
+
+    <section class="shell band">
+      <div class="specs">
+        <article class="spec">
+          <h3>Футболки</h3>
+          <p>Хлопок 92% / эластан 8%. Плотность 240 г/м². Прямой крой, размеры S–XXL.</p>
+        </article>
+        <article class="spec">
+          <h3>Худи</h3>
+          <p>Хлопок 100%. Плотность 280–320 г/м². Свободная посадка, размеры S–XXL.</p>
+        </article>
+        <article class="spec">
+          <h3>Как получить</h3>
+          <p>Собираете заказ на сайте и подтверждаете его в Telegram. Дальше продавец пишет сам и договаривается о встрече или доставке.</p>
+        </article>
+      </div>
+    </section>
+  </section>
+
+  <!-- КАТАЛОГ -->
+  <section class="view" id="view-catalog" hidden>
+    <div class="shell">
+      <div class="page-head">
+        <h1 id="catalogTitle">Каталог</h1>
+        <p id="catalogInfo" class="page-head__info"></p>
+      </div>
+
+      <div class="filters" role="search">
+        <div class="chips" id="categoryChips" role="group" aria-label="Тип вещи"></div>
+        <div class="filters__row">
+          <label class="field field--search">
+            <span class="field__label">Поиск</span>
+            <input type="search" id="searchInput" placeholder="Название или номер" autocomplete="off">
+          </label>
+          <label class="field">
+            <span class="field__label">Коллекция</span>
+            <select id="themeSelect"></select>
+          </label>
+          <label class="field">
+            <span class="field__label">Сортировка</span>
+            <select id="sortSelect">
+              <option value="default">По умолчанию</option>
+              <option value="price-asc">Сначала дешевле</option>
+              <option value="price-desc">Сначала дороже</option>
+              <option value="name">По названию</option>
+            </select>
+          </label>
+        </div>
+        <p class="filters__count" id="resultCount" role="status"></p>
+      </div>
+
+      <div class="grid" id="catalogGrid"></div>
+      <div class="empty" id="catalogEmpty" hidden>
+        <p>Под эти условия ничего не подошло.</p>
+        <button class="btn btn--ghost" type="button" id="resetFilters">Сбросить фильтры</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- КОЛЛЕКЦИИ -->
+  <section class="view" id="view-collections" hidden>
+    <div class="shell">
+      <div class="page-head">
+        <h1>Коллекции</h1>
+        <p class="page-head__info">Шесть вселенных, по которым у нас есть принты.</p>
+      </div>
+      <div class="collection-grid" id="collectionGrid"></div>
+    </div>
+  </section>
+
+  <!-- ТОВАР -->
+  <section class="view" id="view-product" hidden>
+    <div class="shell">
+      <nav class="crumbs" id="productCrumbs" aria-label="Хлебные крошки"></nav>
+      <div class="product" id="productBody"></div>
+      <section class="band" id="relatedBand" hidden>
+        <div class="band__head"><h2>Из этой же коллекции</h2></div>
+        <div class="grid" id="relatedGrid"></div>
+      </section>
+    </div>
+  </section>
+
+  <!-- О МАГАЗИНЕ -->
+  <section class="view" id="view-about" hidden>
+    <div class="shell prose">
+      <div class="page-head">
+        <h1>О магазине</h1>
+      </div>
+      <p>MDKStore — небольшой магазин одежды с принтами по манге, аниме и играм. Мы печатаем в Санкт-Петербурге маленькими партиями, поэтому каждая вещь появляется в каталоге только тогда, когда её реально можно отшить.</p>
+      <h2>Ткани</h2>
+      <p>Футболки — хлопок 92% с эластаном, плотность 240 г/м², прямой крой. Худи — плотный хлопок 280–320 г/м². Размеры от S до XXL.</p>
+      <h2>Уход</h2>
+      <p>Стирка при 30°, наизнанку, без отбеливателя. Принт не гладят напрямую — только через ткань или с изнанки.</p>
+      <h2>Доставка и оплата</h2>
+      <p>Доставка по Санкт-Петербургу входит в цену. По России считаем отдельно при заказе. Оплату и способ передачи обсуждаем в Telegram — на сайте ничего платить не нужно.</p>
+      <h2>Связь</h2>
+      <p>Пишите продавцу напрямую: <a class="textlink" id="aboutContact" href="#" target="_blank" rel="noopener">Telegram</a>. Отвечаем обычно в течение пары часов.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="shell footer__inner">
+    <div>
+      <p class="footer__mark">MDKStore</p>
+      <p class="footer__line">Печать и отправка — Санкт-Петербург.</p>
+    </div>
+    <nav class="footer__nav" aria-label="Footer">
+      <a href="#/catalog">Каталог</a>
+      <a href="#/collections">Коллекции</a>
+      <a href="#/about">О магазине</a>
+      <a id="footerContact" href="#" target="_blank" rel="noopener">Написать в Telegram</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- КОРЗИНА -->
+<div class="scrim" id="scrim" hidden></div>
+<aside class="cart" id="cart" role="dialog" aria-modal="true" aria-labelledby="cartTitle" hidden>
+  <header class="cart__head">
+    <h2 id="cartTitle">Корзина</h2>
+    <button class="icon-btn" type="button" id="cartClose" aria-label="Закрыть корзину">✕</button>
+  </header>
+  <div class="cart__body" id="cartBody"></div>
+  <footer class="cart__foot" id="cartFoot" hidden>
+    <div class="cart__total">
+      <span>Итого</span>
+      <strong id="cartTotal">0 ₽</strong>
+    </div>
+    <button class="btn btn--solid btn--block" type="button" id="checkoutBtn">Оформить в Telegram</button>
+    <p class="cart__fineprint">Мы передадим состав заказа боту. Оплата и доставка — в переписке с продавцом.</p>
+  </footer>
+</aside>
+
+<!-- ПРОСМОТР ФОТО -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр фотографии" hidden>
+  <button class="lightbox__close icon-btn" type="button" id="lbClose" aria-label="Закрыть">✕</button>
+  <button class="lightbox__nav lightbox__nav--prev" type="button" id="lbPrev" aria-label="Предыдущее фото">‹</button>
+  <img id="lbImage" src="" alt="">
+  <button class="lightbox__nav lightbox__nav--next" type="button" id="lbNext" aria-label="Следующее фото">›</button>
+  <p class="lightbox__counter" id="lbCounter"></p>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="products.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
