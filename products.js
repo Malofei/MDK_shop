@@ -1,6 +1,6 @@
 // products.js
-// Каталог G&E Store.
-// Файл сгенерирован ботом 19.09.2026 21:30. Правки удобнее делать через бота:
+// Каталог MDK Shop.
+// Файл сгенерирован ботом 19.09.2026 19:32. Правки удобнее делать через бота:
 // он пересоберёт этот файл целиком и приложит картинки.
 
 const CATEGORIES = [
@@ -80,14 +80,12 @@ const PRODUCTS = [
     ],
     images: [
       "images/tshka_berserk_1.jpg",
-      "images/tshka_berserk_2.jpg",
-      "images/tshka_berserk_3.jpg",
-      "images/tshka_berserk_4.jpg"
+      "images/tshka_berserk_2.jpg"
     ],
   },
   {
     id: 4,
-    name: "Футболка Berserk 2",
+    name: "Футболка Griffith",
     category: "tshirts",
     theme: "berserk",
     price: 3000,
@@ -136,9 +134,7 @@ const PRODUCTS = [
     ],
     images: [
       "images/tshka_witcher_1.jpg",
-      "images/tshka_witcher_2.jpg",
-      "images/tshka_witcher_3.jpg",
-      "images/tshka_witcher_4.jpg"
+      "images/tshka_witcher_2.jpg"
     ],
   },
   {
@@ -196,9 +192,7 @@ const PRODUCTS = [
     ],
     images: [
       "images/tshka_dmc_1.jpg",
-      "images/tshka_dmc_2.jpg",
-      "images/tshka_dmc_3.jpg",
-      "images/tshka_dmc_4.jpg"
+      "images/tshka_dmc_2.jpg"
     ],
   },
   {
@@ -215,18 +209,16 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/tshka_higuruma.png",
-      "images/tshka_higuruma2.png",
-      "images/tshka_higuruma3.png",
-      "images/tshka_higuruma4.png"
+      "images/tshka_higuruma_1.jpg",
+      "images/tshka_higuruma_2.jpg"
     ],
   },
   {
     id: 11,
-    name: "Футболка Toji Fushiguro",
+    name: "Футболка Toji",
     category: "tshirts",
     theme: "jujutsu",
-    price: 4000,
+    price: 4500,
     sizes: [
       "S",
       "M",
@@ -235,10 +227,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/futbolka-toji-fushiguro-11-1.jpg",
-      "images/futbolka-toji-fushiguro-11-2.jpg",
-      "images/futbolka-toji-fushiguro-11-3.jpg",
-      "images/futbolka-toji-fushiguro-11-4.jpg"
+      "images/tshka_toji_1.jpg",
+      "images/tshka_toji_2.jpg"
     ],
   },
 ];

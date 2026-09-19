@@ -1,4 +1,4 @@
-// app.js — G&E Store
+// app.js — MDK Shop
 // Работает и как обычный сайт в браузере, и как Telegram Mini App.
 
 /* ============ НАСТРОЙКИ ============ */
@@ -55,7 +55,7 @@ const store = {
 };
 
 /* ============ ТЕМА ============ */
-const THEME_KEY = 'ge-theme';
+const THEME_KEY = 'mdk-theme';
 
 function applyTheme(mode) {
   document.documentElement.dataset.theme = mode;
@@ -94,7 +94,7 @@ function haptic(kind = 'light') {
 }
 
 /* ============ КОРЗИНА ============ */
-const CART_KEY = 'ge-cart-v2';
+const CART_KEY = 'mdk-cart-v2';
 let cart = [];
 
 function loadCart() {
@@ -251,7 +251,7 @@ function orderText() {
     const size = line.size ? `, размер ${line.size}` : '';
     return `• №${product.id} ${product.name}${size} — ${line.qty} шт — ${money(product.price * line.qty)}`;
   });
-  return `Заказ в G&E Store:\n${lines.join('\n')}\n\nИтого: ${money(cartTotal())}`;
+  return `Заказ в MDK Shop:\n${lines.join('\n')}\n\nИтого: ${money(cartTotal())}`;
 }
 
 async function copyToClipboard(text) {
@@ -640,7 +640,7 @@ function renderProduct(id) {
   band.hidden = related.length === 0;
   document.getElementById('relatedGrid').innerHTML = related.map(cardHTML).join('');
 
-  document.title = `${product.name} — G&E Store`;
+  document.title = `${product.name} — MDK Shop`;
 }
 
 /* ============ РОУТЕР ============ */
@@ -661,7 +661,7 @@ function markNav(hash) {
 function route() {
   const hash = location.hash || '#/';
   const parts = hash.replace(/^#\/?/, '').split('/').filter(Boolean);
-  document.title = 'G&E Store — футболки и худи по манге и аниме';
+  document.title = 'MDK Shop — футболки и худи по манге и аниме';
 
   if (!cartPanel.hidden) closeCart();
   if (!lightbox.hidden) closeLightbox();
