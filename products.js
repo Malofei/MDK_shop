@@ -1,6 +1,6 @@
 // products.js
 // Каталог MDK Shop.
-// Файл сгенерирован ботом 19.09.2026 19:32. Правки удобнее делать через бота:
+// Файл сгенерирован ботом 19.09.2026 19:48. Правки удобнее делать через бота:
 // он пересоберёт этот файл целиком и приложит картинки.
 
 const CATEGORIES = [
@@ -9,64 +9,17 @@ const CATEGORIES = [
 ];
 
 const THEMES = [
-  { slug: "berserk", title: "Берсерк", cover: "images/logo_berserk.png", info: "Коллекция по мотивам манги «Берсерк»" },
-  { slug: "bleach", title: "Блич", cover: "images/logo_bleach.jpg", info: "Коллекция по мотивам аниме «Блич»" },
-  { slug: "jujutsu", title: "Магическая битва", cover: "images/juj_logo.png", info: "Коллекция по мотивам Jujutsu Kaisen" },
-  { slug: "hollow", title: "Hollow Knight", cover: "images/hk_logo.png", info: "Коллекция по мотивам игры Hollow Knight" },
-  { slug: "dmc", title: "Devil May Cry", cover: "images/logo_dmc.jpg", info: "Коллекция по мотивам серии Devil May Cry" },
-  { slug: "witcher", title: "Ведьмак", cover: "images/logo_witcher.jpg", info: "Коллекция по мотивам «Ведьмака»" },
+  { slug: "berserk", title: "Берсерк", cover: "", info: "Коллекция по мотивам манги «Берсерк»" },
+  { slug: "bleach", title: "Блич", cover: "", info: "Коллекция по мотивам аниме «Блич»" },
+  { slug: "jujutsu", title: "Магическая битва", cover: "", info: "Коллекция по мотивам Jujutsu Kaisen" },
+  { slug: "hollow", title: "Hollow Knight", cover: "", info: "Коллекция по мотивам игры Hollow Knight" },
+  { slug: "dmc", title: "Devil May Cry", cover: "", info: "Коллекция по мотивам серии Devil May Cry" },
+  { slug: "witcher", title: "Ведьмак", cover: "", info: "Коллекция по мотивам «Ведьмака»" },
 ];
 
 const PRODUCTS = [
   {
     id: 1,
-    name: "Худи Berserk",
-    category: "hoodies",
-    theme: "berserk",
-    price: 7000,
-    sizes: [
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
-    images: [
-      "images/hoodie1.jpg",
-      "images/hoddie2.jpg",
-      "images/hoddie3.jpg",
-      "images/hoddie4.jpg",
-      "images/hoodie5.jpg",
-      "images/hoodie6.jpg",
-      "images/hoodie7.jpg"
-    ],
-  },
-  {
-    id: 2,
-    name: "Худи Berserk 2",
-    category: "hoodies",
-    theme: "berserk",
-    price: 7000,
-    sizes: [
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
-    images: [
-      "images/hoddie_grif_1.jpg",
-      "images/hoddie_grif_2.jpg",
-      "images/hoddie_grif_3.jpg",
-      "images/hoddie_grif_4.jpg",
-      "images/hoddie_grif_5.jpg",
-      "images/hoddie_grif_6.jpg",
-      "images/hoddie_grif_7.jpg",
-      "images/hoddie_grif_8.jpg"
-    ],
-  },
-  {
-    id: 3,
     name: "Футболка Berserk 1",
     category: "tshirts",
     theme: "berserk",
@@ -84,7 +37,7 @@ const PRODUCTS = [
     ],
   },
   {
-    id: 4,
+    id: 2,
     name: "Футболка Griffith",
     category: "tshirts",
     theme: "berserk",
@@ -102,7 +55,7 @@ const PRODUCTS = [
     ],
   },
   {
-    id: 5,
+    id: 3,
     name: "Футболка Berserk 3",
     category: "tshirts",
     theme: "berserk",
@@ -120,7 +73,7 @@ const PRODUCTS = [
     ],
   },
   {
-    id: 6,
+    id: 4,
     name: "Футболка Ведьмак",
     category: "tshirts",
     theme: "witcher",
@@ -138,47 +91,7 @@ const PRODUCTS = [
     ],
   },
   {
-    id: 7,
-    name: "Футболка Bleach 1",
-    category: "tshirts",
-    theme: "bleach",
-    price: 4500,
-    sizes: [
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
-    images: [
-      "images/tshka_urahara_1.jpg",
-      "images/tshka_urahara_2.jpg",
-      "images/tshka_urahara_3.jpg",
-      "images/tshka_urahara_4.jpg"
-    ],
-  },
-  {
-    id: 8,
-    name: "Футболка Bleach 2",
-    category: "tshirts",
-    theme: "bleach",
-    price: 4500,
-    sizes: [
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
-    images: [
-      "images/tshka_kyoraku_1.jpg",
-      "images/tshka_kyoraku_2.jpg",
-      "images/tshka_kyoraku_3.jpg",
-      "images/tshka_kyoraku_4.jpg"
-    ],
-  },
-  {
-    id: 9,
+    id: 5,
     name: "Футболка DMC 1",
     category: "tshirts",
     theme: "dmc",
@@ -196,7 +109,7 @@ const PRODUCTS = [
     ],
   },
   {
-    id: 10,
+    id: 6,
     name: "Футболка Hiromi Higuruma",
     category: "tshirts",
     theme: "jujutsu",
@@ -214,7 +127,7 @@ const PRODUCTS = [
     ],
   },
   {
-    id: 11,
+    id: 7,
     name: "Футболка Toji",
     category: "tshirts",
     theme: "jujutsu",
