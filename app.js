@@ -619,10 +619,11 @@ function initWheel(root, items) {
 
 function renderWheel() {
   const root = document.getElementById('heroWheel');
-  const items = wheelItems();
-
   stopWheel();
   stopWheel = () => {};
+  if (!root) return;                               // разметка без колеса (старый index.html)
+
+  const items = wheelItems();
 
   if (items.length < 3) {                          // из двух секторов колесо не собрать
     root.hidden = true;
@@ -635,7 +636,14 @@ function renderWheel() {
 
 /* ============ ГЛАВНАЯ ============ */
 function renderHome() {
-  renderWheel();
+  // Колесо — украшение: если с ним что-то не так, остальная главная всё равно рисуется.
+  try {
+    renderWheel();
+  } catch (error) {
+    console.error('Колесо принтов не построилось:', error);
+    const root = document.getElementById('heroWheel');
+    if (root) root.hidden = true;
+  }
 
   document.getElementById('homeCollections').innerHTML =
     COLLECTIONS.map(collectionHTML).join('');
@@ -744,12 +752,14 @@ function renderCatalog({ category = 'all', theme = 'all' } = {}) {
   // логотип коллекции рядом с заголовком
   const logo = document.getElementById('catalogLogo');
   const art = theme !== 'all' && themeBySlug(theme) ? collectionArt(themeBySlug(theme)) : null;
-  logo.hidden = !art;
-  logo.classList.toggle('tile-art--bleed', art?.fit === 'cover');
-  logo.style.cssText = artVars(art);
-  logo.innerHTML = art
-    ? `<img src="${art.src}" alt="${titleOfTheme(theme)}" decoding="async">`
-    : '';
+  if (logo) {
+    logo.hidden = !art;
+    logo.classList.toggle('tile-art--bleed', art?.fit === 'cover');
+    logo.style.cssText = artVars(art);
+    logo.innerHTML = art
+      ? `<img src="${art.src}" alt="${titleOfTheme(theme)}" decoding="async">`
+      : '';
+  }
 
   if (theme !== 'all') {
     heading.textContent = titleOfTheme(theme) || 'Коллекция';
@@ -769,8 +779,8 @@ function renderCatalog({ category = 'all', theme = 'all' } = {}) {
 /* ============ КОЛЛЕКЦИИ ============ */
 function renderCollections() {
   const n = COLLECTIONS.length;
-  document.getElementById('collectionsInfo').textContent =
-    `${n} ${plural(n, 'вселенная', 'вселенные', 'вселенных')}, по которым у нас есть принты.`;
+  const info = document.getElementById('collectionsInfo');
+  if (info) info.textContent = `${n} ${plural(n, 'вселенная', 'вселенные', 'вселенных')}, по которым у нас есть принты.`;
   document.getElementById('collectionGrid').innerHTML = COLLECTIONS.map(collectionHTML).join('');
 }
 
