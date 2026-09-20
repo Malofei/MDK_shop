@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=3">
+<link rel="stylesheet" href="styles.css">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
@@ -66,7 +66,7 @@
           <a class="btn btn--ghost" href="#/collections">Выбрать коллекцию</a>
         </div>
       </div>
-      <div class="wheel" id="heroWheel" role="group" aria-label="Последние принты футболок"></div>
+      <div class="hero__panels" id="heroPanels" aria-hidden="true"></div>
     </div>
 
     <section class="shell band">
@@ -106,12 +106,9 @@
   <!-- КАТАЛОГ -->
   <section class="view" id="view-catalog" hidden>
     <div class="shell">
-      <div class="page-head page-head--split">
-        <div class="page-head__text">
-          <h1 id="catalogTitle">Каталог</h1>
-          <p id="catalogInfo" class="page-head__info"></p>
-        </div>
-        <div class="page-head__logo tile-art" id="catalogLogo" hidden></div>
+      <div class="page-head">
+        <h1 id="catalogTitle">Каталог</h1>
+        <p id="catalogInfo" class="page-head__info"></p>
       </div>
 
       <div class="filters" role="search">
@@ -151,7 +148,7 @@
     <div class="shell">
       <div class="page-head">
         <h1>Коллекции</h1>
-        <p class="page-head__info" id="collectionsInfo"></p>
+        <p class="page-head__info">Шесть вселенных, по которым у нас есть принты.</p>
       </div>
       <div class="collection-grid" id="collectionGrid"></div>
     </div>
@@ -234,7 +231,6 @@
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <script src="products.js"></script>
-<script src="art.js?v=3"></script>
-<script src="app.js?v=3"></script>
+<script src="app.js"></script>
 </body>
 </html>
