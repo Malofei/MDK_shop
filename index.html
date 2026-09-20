@@ -66,7 +66,7 @@
           <a class="btn btn--ghost" href="#/collections">Выбрать коллекцию</a>
         </div>
       </div>
-      <div class="hero__panels" id="heroPanels" aria-hidden="true"></div>
+      <div class="wheel" id="heroWheel" role="group" aria-label="Последние принты футболок"></div>
     </div>
 
     <section class="shell band">
@@ -106,9 +106,12 @@
   <!-- КАТАЛОГ -->
   <section class="view" id="view-catalog" hidden>
     <div class="shell">
-      <div class="page-head">
-        <h1 id="catalogTitle">Каталог</h1>
-        <p id="catalogInfo" class="page-head__info"></p>
+      <div class="page-head page-head--split">
+        <div class="page-head__text">
+          <h1 id="catalogTitle">Каталог</h1>
+          <p id="catalogInfo" class="page-head__info"></p>
+        </div>
+        <div class="page-head__logo tile-art" id="catalogLogo" hidden></div>
       </div>
 
       <div class="filters" role="search">
@@ -148,7 +151,7 @@
     <div class="shell">
       <div class="page-head">
         <h1>Коллекции</h1>
-        <p class="page-head__info">Шесть вселенных, по которым у нас есть принты.</p>
+        <p class="page-head__info" id="collectionsInfo"></p>
       </div>
       <div class="collection-grid" id="collectionGrid"></div>
     </div>
@@ -231,6 +234,7 @@
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <script src="products.js"></script>
+<script src="art.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

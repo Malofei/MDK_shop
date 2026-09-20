@@ -21,6 +21,19 @@ const titleOfTheme = (slug) => themeBySlug(slug)?.title || '';
 const titleOfCategory = (slug) => categoryBySlug(slug)?.title || '';
 const money = (value) => new Intl.NumberFormat('ru-RU').format(value) + ' ₽';
 
+// «1 вещь · 2 вещи · 5 вещей» — с учётом 11–14 и 21, 22…
+const plural = (n, one, few, many) => {
+  const mod10 = n % 10;
+  const mod100 = n % 100;
+  if (mod10 === 1 && mod100 !== 11) return one;
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return few;
+  return many;
+};
+
+// Логотипы коллекций и принты для колеса лежат в art.js — бот их не трогает.
+const COLLECTION_ART = window.COLLECTION_ART || {};
+const PRINT_ART = window.PRINT_ART || {};
+
 const PLACEHOLDER =
   'data:image/svg+xml;utf8,' +
   encodeURIComponent(
@@ -362,15 +375,36 @@ function cardHTML(product) {
     </article>`;
 }
 
+// Логотип коллекции: сначала art.js, потом поле cover из products.js (если бот когда-нибудь его заполнит).
+function collectionArt(theme) {
+  const art = COLLECTION_ART[theme.slug];
+  if (art) return art;
+  return theme.cover ? { src: theme.cover } : null;
+}
+
+// CSS-переменные плитки: цвет подложки, точки, кадрирование
+function artVars(art) {
+  if (!art) return '';
+  const vars = [];
+  if (art.bg) vars.push(`--cover-bg:${art.bg}`);
+  if (art.dot) vars.push(`--cover-dot:${art.dot}`);
+  if (art.pos) vars.push(`--cover-pos:${art.pos}`);
+  if (art.h) vars.push(`--cover-h:${art.h}`);
+  return vars.join(';');
+}
+
+const artStyle = (art) => (artVars(art) ? ` style="${artVars(art)}"` : '');
+
 function collectionHTML(theme) {
   const count = ITEMS.filter((p) => p.theme === theme.slug).length;
   const label = count === 0
     ? 'скоро'
-    : `${count} ${count === 1 ? 'вещь' : count < 5 ? 'вещи' : 'вещей'}`;
+    : `${count} ${plural(count, 'вещь', 'вещи', 'вещей')}`;
+  const art = collectionArt(theme);
   return `
     <a class="collection" href="#/collection/${theme.slug}">
-      <div class="collection__cover">
-        ${theme.cover ? `<img src="${theme.cover}" alt="" loading="lazy">` : ''}
+      <div class="collection__cover tile-art${art?.fit === 'cover' ? ' tile-art--bleed' : ''}"${artStyle(art)}>
+        ${art ? `<img src="${art.src}" alt="" loading="lazy" decoding="async">` : ''}
       </div>
       <div class="collection__body">
         <p class="collection__name">${theme.title}</p>
@@ -389,12 +423,219 @@ document.addEventListener('click', (event) => {
   addToCart(product.id, size, 1);
 });
 
+/* ============ КОЛЕСО ПРИНТОВ ============
+   Радиальное меню, как «колесо навыков» в играх: пять секторов — пять последних
+   футболок. Секторы выбираются наведением, тапом или клавиатурой; в центре
+   показывается выбранная вещь. Геометрия считается в координатах viewBox 600×600. */
+const WHEEL = {
+  size: 5,               // сколько принтов в колесе
+  category: 'tshirts',   // из какой категории; null — из всех
+  center: 300,
+  outer: 282,            // внешний радиус секторов
+  inner: 118,            // внутренний радиус секторов
+  hub: 102,              // радиус центрального диска
+  gap: 3.5,              // половина зазора между секторами, px
+  lift: 10,              // на сколько активный сектор выезжает наружу
+  printSize: 156,        // сторона квадрата под принт
+  autoEvery: 3200,       // мс между шагами подсветки, пока человек не тронул колесо
+};
+
+let stopWheel = () => {};
+
+function wheelItems() {
+  return ITEMS
+    .filter((p) => !WHEEL.category || p.category === WHEEL.category)
+    .sort((a, b) => b.id - a.id)                 // новые — первыми
+    .slice(0, WHEEL.size)
+    .map((product) => {
+      const print = PRINT_ART[product.id];
+      return { product, src: print || cover(product), isPrint: Boolean(print) };
+    });
+}
+
+const polar = (r, deg) => {
+  const t = (deg * Math.PI) / 180;
+  return [WHEEL.center + r * Math.cos(t), WHEEL.center + r * Math.sin(t)];
+};
+
+// Кольцевой сектор. gap — половина зазора в пикселях: одинаковая ширина и у центра, и у края.
+function wedgePath(mid, half, ri, ro, gap) {
+  const toDeg = (rad) => (rad * 180) / Math.PI;
+  const dOut = half - toDeg(Math.asin(gap / ro));
+  const dIn = half - toDeg(Math.asin(gap / ri));
+  const pts = [polar(ro, mid - dOut), polar(ro, mid + dOut), polar(ri, mid + dIn), polar(ri, mid - dIn)]
+    .map(([x, y]) => `${x.toFixed(2)} ${y.toFixed(2)}`);
+  return `M${pts[0]}A${ro} ${ro} 0 0 1 ${pts[1]}L${pts[2]}A${ri} ${ri} 0 0 0 ${pts[3]}Z`;
+}
+
+const shortName = (name) => name.replace(/^(Футболка|Худи)\s+/i, '');
+
+function wheelHTML(items) {
+  const n = items.length;
+  const step = 360 / n;
+  const half = step / 2;
+  const mid0 = (WHEEL.inner + WHEEL.outer) / 2;
+  const c = WHEEL.center;
+  const box = WHEEL.printSize;
+
+  const slots = items.map(({ product, src, isPrint }, i) => {
+    const mid = -90 + step * i;                      // первый сектор — сверху, дальше по часовой
+    const rad = (mid * Math.PI) / 180;
+    const [px, py] = polar(mid0, mid);
+    const label = `${product.name}, ${titleOfTheme(product.theme)}, ${money(product.price)}`;
+    return `
+      <g class="wheel__slot" data-slot="${i}"
+         style="--dx:${(Math.cos(rad) * WHEEL.lift).toFixed(2)}px;--dy:${(Math.sin(rad) * WHEEL.lift).toFixed(2)}px;--delay:${(0.08 * i + 0.05).toFixed(2)}s">
+        <a href="#/product/${product.id}" aria-label="${label}">
+          <g class="wheel__enter">
+            <g class="wheel__lift">
+              <path class="wheel__wedge" d="${wedgePath(mid, half, WHEEL.inner, WHEEL.outer, WHEEL.gap)}"/>
+              <path class="wheel__tone" d="${wedgePath(mid, half, WHEEL.inner, WHEEL.outer, WHEEL.gap)}" fill="url(#wheelDots)"/>
+              <circle class="wheel__glow" cx="${px.toFixed(2)}" cy="${py.toFixed(2)}" r="${box * 0.64}" fill="url(#wheelGlow)"/>
+              <image class="wheel__print${isPrint ? '' : ' is-photo'}" href="${src}"
+                     x="${(px - box / 2).toFixed(2)}" y="${(py - box / 2).toFixed(2)}" width="${box}" height="${box}"
+                     preserveAspectRatio="xMidYMid meet"/>
+            </g>
+          </g>
+          <path class="wheel__hit" d="${wedgePath(mid, half, WHEEL.inner - 2, WHEEL.outer + 6, 0)}"/>
+        </a>
+      </g>`;
+  }).join('');
+
+  const r0 = WHEEL.hub + 4;
+  const r1 = WHEEL.inner - 1;
+  return `
+    <svg class="wheel__svg" viewBox="0 0 600 600" aria-hidden="false" focusable="false">
+      <defs>
+        <pattern id="wheelDots" width="9" height="9" patternUnits="userSpaceOnUse">
+          <circle cx="4.5" cy="4.5" r="1.25" fill="#EFEAE2" fill-opacity=".11"/>
+        </pattern>
+        <radialGradient id="wheelGlow">
+          <stop offset="0" stop-color="#EFEAE2" stop-opacity=".2"/>
+          <stop offset="1" stop-color="#EFEAE2" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <circle class="wheel__shadow" cx="${c + 8}" cy="${c + 8}" r="${WHEEL.outer}"/>
+      <circle class="wheel__base" cx="${c}" cy="${c}" r="${WHEEL.outer}"/>
+      ${slots}
+      <circle class="wheel__hub-bg" cx="${c}" cy="${c}" r="${WHEEL.hub}"/>
+      <path class="wheel__pointer" d="M${c + r0} ${c - 8}L${c + r1} ${c}L${c + r0} ${c + 8}Z"/>
+    </svg>
+    <div class="wheel__hub">
+      <div class="wheel__hub-inner" id="wheelHub"></div>
+    </div>`;
+}
+
+function initWheel(root, items) {
+  const slots = [...root.querySelectorAll('.wheel__slot')];
+  const pointer = root.querySelector('.wheel__pointer');
+  const hub = root.querySelector('#wheelHub');
+  const n = items.length;
+  const step = 360 / n;
+  const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+
+  let active = -1;
+  let pointerAngle = -90;
+  let timer = null;
+  let ticks = 0;
+
+  function paintHub(i, animate) {
+    const { product } = items[i];
+    hub.innerHTML = `
+      <p class="wheel__theme">${i === 0 ? '<span class="wheel__tag">новинка</span>' : ''}${titleOfTheme(product.theme)}</p>
+      <p class="wheel__name">${shortName(product.name)}</p>
+      <p class="wheel__price">${money(product.price)}</p>
+      <a class="wheel__open" href="#/product/${product.id}">Смотреть</a>`;
+    if (animate) {
+      hub.classList.remove('is-swapping');
+      void hub.offsetWidth;                        // перезапуск CSS-анимации
+      hub.classList.add('is-swapping');
+    }
+  }
+
+  function select(i) {
+    if (i === active) return;
+    const first = active === -1;
+    active = i;
+    slots.forEach((slot, k) => slot.classList.toggle('is-active', k === i));
+
+    // стрелка поворачивается по кратчайшему пути, а не крутится назад через 360°
+    const target = -90 + step * i;
+    pointerAngle = first ? target : pointerAngle + ((target - pointerAngle + 540) % 360) - 180;
+    pointer.style.transform = `rotate(${pointerAngle}deg)`;
+
+    paintHub(i, !first);
+  }
+
+  function stopAuto() {
+    if (timer) clearInterval(timer);
+    timer = null;
+  }
+
+  function startAuto() {
+    if (reduceMotion || n < 2) return;
+    timer = setInterval(() => {
+      if (document.hidden) return;
+      ticks += 1;
+      select((active + 1) % n);
+      if (ticks >= n * 2) stopAuto();              // два круга, чтобы привлечь внимание, и хватит
+    }, WHEEL.autoEvery);
+  }
+
+  // На телефоне первый тап выбирает сектор, второй — открывает вещь.
+  let lastPointer = '';
+  let wasActive = false;
+
+  slots.forEach((slot, i) => {
+    const link = slot.querySelector('a');
+
+    link.addEventListener('pointerenter', (event) => {
+      if (event.pointerType === 'touch') return;
+      stopAuto();
+      select(i);
+    });
+
+    link.addEventListener('pointerdown', (event) => {
+      lastPointer = event.pointerType;
+      wasActive = active === i;
+      stopAuto();
+      select(i);
+    });
+
+    link.addEventListener('keydown', () => { lastPointer = 'key'; });
+    link.addEventListener('focus', () => { stopAuto(); select(i); });
+
+    link.addEventListener('click', (event) => {
+      if (lastPointer === 'touch' && !wasActive) event.preventDefault();
+    });
+  });
+
+  hub.addEventListener('pointerdown', stopAuto);
+
+  select(0);
+  startAuto();
+  return stopAuto;
+}
+
+function renderWheel() {
+  const root = document.getElementById('heroWheel');
+  const items = wheelItems();
+
+  stopWheel();
+  stopWheel = () => {};
+
+  if (items.length < 3) {                          // из двух секторов колесо не собрать
+    root.hidden = true;
+    return;
+  }
+  root.hidden = false;
+  root.innerHTML = wheelHTML(items);
+  stopWheel = initWheel(root, items);
+}
+
 /* ============ ГЛАВНАЯ ============ */
 function renderHome() {
-  const picks = [...ITEMS].reverse().slice(0, 3);
-  document.getElementById('heroPanels').innerHTML = picks.map((p) => `
-    <figure class="hero__panel"><img src="${cover(p)}" alt="" loading="eager"></figure>
-  `).join('');
+  renderWheel();
 
   document.getElementById('homeCollections').innerHTML =
     COLLECTIONS.map(collectionHTML).join('');
@@ -488,7 +729,7 @@ function renderCatalogGrid() {
   grid.innerHTML = list.map(cardHTML).join('');
   document.getElementById('catalogEmpty').hidden = list.length > 0;
 
-  const word = list.length === 1 ? 'вещь' : list.length < 5 && list.length > 0 ? 'вещи' : 'вещей';
+  const word = plural(list.length, 'вещь', 'вещи', 'вещей');
   document.getElementById('resultCount').textContent =
     list.length ? `Показано ${list.length} ${word}` : '';
 }
@@ -499,6 +740,16 @@ function renderCatalog({ category = 'all', theme = 'all' } = {}) {
 
   const heading = document.getElementById('catalogTitle');
   const info = document.getElementById('catalogInfo');
+
+  // логотип коллекции рядом с заголовком
+  const logo = document.getElementById('catalogLogo');
+  const art = theme !== 'all' && themeBySlug(theme) ? collectionArt(themeBySlug(theme)) : null;
+  logo.hidden = !art;
+  logo.classList.toggle('tile-art--bleed', art?.fit === 'cover');
+  logo.style.cssText = artVars(art);
+  logo.innerHTML = art
+    ? `<img src="${art.src}" alt="${titleOfTheme(theme)}" decoding="async">`
+    : '';
 
   if (theme !== 'all') {
     heading.textContent = titleOfTheme(theme) || 'Коллекция';
@@ -517,6 +768,9 @@ function renderCatalog({ category = 'all', theme = 'all' } = {}) {
 
 /* ============ КОЛЛЕКЦИИ ============ */
 function renderCollections() {
+  const n = COLLECTIONS.length;
+  document.getElementById('collectionsInfo').textContent =
+    `${n} ${plural(n, 'вселенная', 'вселенные', 'вселенных')}, по которым у нас есть принты.`;
   document.getElementById('collectionGrid').innerHTML = COLLECTIONS.map(collectionHTML).join('');
 }
 
@@ -665,6 +919,8 @@ function route() {
 
   if (!cartPanel.hidden) closeCart();
   if (!lightbox.hidden) closeLightbox();
+
+  stopWheel();                                     // автоподсветка колеса не должна жить вне главной
 
   switch (parts[0]) {
     case undefined:
