@@ -1,6 +1,6 @@
 // products.js
 // Каталог MDK Shop.
-// Файл сгенерирован ботом 19.09.2026 19:48. Правки удобнее делать через бота:
+// Файл сгенерирован ботом 20.09.2026 14:49. Правки удобнее делать через бота:
 // он пересоберёт этот файл целиком и приложит картинки.
 
 const CATEGORIES = [
@@ -15,6 +15,7 @@ const THEMES = [
   { slug: "hollow", title: "Hollow Knight", cover: "", info: "Коллекция по мотивам игры Hollow Knight" },
   { slug: "dmc", title: "Devil May Cry", cover: "", info: "Коллекция по мотивам серии Devil May Cry" },
   { slug: "witcher", title: "Ведьмак", cover: "", info: "Коллекция по мотивам «Ведьмака»" },
+  { slug: "one-piece", title: "Ван-Пис", cover: "", info: "Коллекция по мотивам «Ван-Пис»" },
 ];
 
 const PRODUCTS = [
@@ -32,8 +33,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/tshka_berserk_1.jpg",
-      "images/tshka_berserk_2.jpg"
+      "images/berserk1.png",
+      "images/berserk2.png"
     ],
   },
   {
@@ -50,8 +51,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/tshka_grif_1.jpg",
-      "images/tshka_grif_2.jpg"
+      "images/griffith1.png",
+      "images/griffith2.png"
     ],
   },
   {
@@ -68,8 +69,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/tshka_berserk_21.jpg",
-      "images/tshka_berserk_22.jpg"
+      "images/berserk_2_1.png",
+      "images/berserk_2_2.png"
     ],
   },
   {
@@ -86,8 +87,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/tshka_witcher_1.jpg",
-      "images/tshka_witcher_2.jpg"
+      "images/witcher1.png",
+      "images/witcher2.png"
     ],
   },
   {
@@ -104,8 +105,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/tshka_dmc_1.jpg",
-      "images/tshka_dmc_2.jpg"
+      "images/dmc1.png",
+      "images/dmc2.png"
     ],
   },
   {
@@ -122,8 +123,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/tshka_higuruma_1.jpg",
-      "images/tshka_higuruma_2.jpg"
+      "images/higuruma1.png",
+      "images/higuruma2.png"
     ],
   },
   {
@@ -140,8 +141,66 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/tshka_toji_1.jpg",
-      "images/tshka_toji_2.jpg"
+      "images/toji1.png",
+      "images/toji2.png"
+    ],
+  },
+  {
+    id: 8,
+    name: "Футболка Zoro",
+    category: "tshirts",
+    theme: "one-piece",
+    price: 4500,
+    sizes: [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    images: [
+      "images/zoro1.png",
+      "images/zoro2.png"
+    ],
+  },
+  {
+    id: 9,
+    name: "Худи Berserk",
+    category: "hoodies",
+    theme: "berserk",
+    price: 7000,
+    sizes: [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    images: [
+      "images/berserk_3_1.png",
+      "images/berserk_3_2.png",
+      "images/berserk_3_3.png",
+      "images/berserk_3_4.png"
+    ],
+  },
+  {
+    id: 10,
+    name: "Худи Griffith",
+    category: "hoodies",
+    theme: "berserk",
+    price: 7000,
+    sizes: [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    images: [
+      "images/berserk_4_1.png",
+      "images/berserk_4_2.png",
+      "images/berserk_4_3.png",
+      "images/berserk_4_4.png"
     ],
   },
 ];
