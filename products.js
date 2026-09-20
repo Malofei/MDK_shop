@@ -33,8 +33,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/berserk1.png",
-      "images/berserk2.png"
+      "images/prints/berserk1.png",
+      "images/prints/berserk2.png"
     ],
   },
   {
@@ -51,8 +51,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/griffith1.png",
-      "images/griffith2.png"
+      "images/prints/griffith1.png",
+      "images/prints/griffith2.png"
     ],
   },
   {
@@ -69,8 +69,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/berserk_2_1.png",
-      "images/berserk_2_2.png"
+      "images/prints/berserk_2_1.png",
+      "images/prints/berserk_2_2.png"
     ],
   },
   {
@@ -87,8 +87,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/witcher1.png",
-      "images/witcher2.png"
+      "images/prints/witcher1.png",
+      "images/prints/witcher2.png"
     ],
   },
   {
@@ -105,8 +105,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/dmc1.png",
-      "images/dmc2.png"
+      "images/prints/dmc1.png",
+      "images/prints/dmc2.png"
     ],
   },
   {
@@ -123,8 +123,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/higuruma1.png",
-      "images/higuruma2.png"
+      "images/prints/higuruma1.png",
+      "images/prints/higuruma2.png"
     ],
   },
   {
@@ -141,8 +141,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/toji1.png",
-      "images/toji2.png"
+      "images/prints/toji1.png",
+      "images/prints/toji2.png"
     ],
   },
   {
@@ -159,8 +159,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/zoro1.png",
-      "images/zoro2.png"
+      "images/prints/zoro1.png",
+      "images/prints/zoro2.png"
     ],
   },
   {
@@ -177,10 +177,10 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/berserk_3_1.png",
-      "images/berserk_3_2.png",
-      "images/berserk_3_3.png",
-      "images/berserk_3_4.png"
+      "images/prints/berserk_3_1.png",
+      "images/prints/berserk_3_2.png",
+      "images/prints/berserk_3_3.png",
+      "images/prints/berserk_3_4.png"
     ],
   },
   {
@@ -197,10 +197,10 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/berserk_4_1.png",
-      "images/berserk_4_2.png",
-      "images/berserk_4_3.png",
-      "images/berserk_4_4.png"
+      "images/prints/berserk_4_1.png",
+      "images/prints/berserk_4_2.png",
+      "images/prints/berserk_4_3.png",
+      "images/prints/berserk_4_4.png"
     ],
   },
 ];
