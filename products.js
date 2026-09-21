@@ -9,13 +9,13 @@ const CATEGORIES = [
 ];
 
 const THEMES = [
-  { slug: "berserk", title: "Берсерк", cover: "", info: "Коллекция по мотивам манги «Берсерк»" },
-  { slug: "bleach", title: "Блич", cover: "", info: "Коллекция по мотивам аниме «Блич»" },
-  { slug: "jujutsu", title: "Магическая битва", cover: "", info: "Коллекция по мотивам Jujutsu Kaisen" },
+  { slug: "berserk", title: "Berserk", cover: "", info: "Коллекция по мотивам манги «Berserk»" },
+  { slug: "bleach", title: "Bleach", cover: "", info: "Коллекция по мотивам аниме «Bleach»" },
+  { slug: "jujutsu", title: "Jujutsu Kaisen", cover: "", info: "Коллекция по мотивам Jujutsu Kaisen" },
   { slug: "hollow", title: "Hollow Knight", cover: "", info: "Коллекция по мотивам игры Hollow Knight" },
   { slug: "dmc", title: "Devil May Cry", cover: "", info: "Коллекция по мотивам серии Devil May Cry" },
-  { slug: "witcher", title: "Ведьмак", cover: "", info: "Коллекция по мотивам «Ведьмака»" },
-  { slug: "one-piece", title: "Ван-Пис", cover: "", info: "Коллекция по мотивам «Ван-Пис»" },
+  { slug: "witcher", title: "The Witcher", cover: "", info: "Коллекция по мотивам «The Witcher»" },
+  { slug: "one-piece", title: "One Piece", cover: "", info: "Коллекция по мотивам «One Piece»" },
 ];
 
 const PRODUCTS = [
@@ -201,6 +201,25 @@ const PRODUCTS = [
       "images/prints/berserk_4_2.png",
       "images/prints/berserk_4_3.png",
       "images/prints/berserk_4_4.png"
+    ],
+  },
+  {
+    id: 11,
+    name: "Футболка Hollow Knight",
+    category: "tshirts",
+    theme: "hollow",
+    price: 4000,
+    sizes: [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    images: [
+      "images/prints/hollow1.png",
+      "images/prints/hollow2.png",
+      "images/prints/hollow3.png"
     ],
   },
 ];

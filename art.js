@@ -28,6 +28,7 @@ window.COLLECTION_ART = {
    ВРЕМЕННО: эти файлы вырезаны автоматически из фото футболок.
    Когда будут настоящие принты — просто замените пути. */
 window.PRINT_ART = {
+  11: "images/prints/hollow.webp",
   8: "images/prints/zoro.webp",
   7: "images/prints/toji.webp",
   6: "images/prints/higuruma.webp",
