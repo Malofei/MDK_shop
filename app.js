@@ -4,7 +4,7 @@
 /* ============ НАСТРОЙКИ ============ */
 const CONFIG = {
   botUsername: 'gutsenj_bot',      // бот, который принимает заказы
-  sellerUsername: 'guts_enj0yer',  // продавец, для прямой связи
+  sellerUsername: 'guts_enj0yer',  // продавец (на случай, если бот недоступен)
   city: 'Санкт-Петербург',
 };
 
@@ -42,6 +42,17 @@ const PLACEHOLDER =
   );
 
 const cover = (product, index = 0) => product.images?.[index] || PLACEHOLDER;
+
+// Уменьшенная копия для карточек, корзины и миниатюр: бот кладёт её рядом, в подпапку sm/
+// (images/prints/toji1.webp → images/prints/sm/toji1.webp). Полный размер — только на странице товара.
+const preview = (src) => src.replace(/^(images\/prints\/)([^/]+\.webp)$/, '$1sm/$2');
+
+// <img> с превью; если превью почему-то нет — подставит полный файл.
+const previewImg = (src, attrs = '') =>
+  `<img src="${preview(src)}" data-full="${src}" ${attrs} onerror="if(this.dataset.full&&this.src.indexOf(this.dataset.full)<0){this.src=this.dataset.full}">`;
+
+// «Написать в Telegram» открывает бота: он передаёт вопрос продавцу, ответ приходит туда же.
+const askLink = () => `https://t.me/${CONFIG.botUsername}?start=ask`;
 
 /* ============ TELEGRAM ============ */
 const tg = window.Telegram?.WebApp;
@@ -184,7 +195,7 @@ function renderCart() {
     const product = byId(line.id);
     return `
       <div class="cart-line">
-        <img class="cart-line__img" src="${cover(product)}" alt="" loading="lazy">
+        ${previewImg(cover(product), 'class="cart-line__img" alt="" loading="lazy" decoding="async"')}
         <div>
           <p class="cart-line__name">${product.name}</p>
           <p class="cart-line__meta">№${product.id}${line.size ? ' · размер ' + line.size : ''}</p>
@@ -295,12 +306,12 @@ async function checkout() {
     return;
   }
 
-  // Заказ длиннее, чем помещается в ссылку — отправляем текстом продавцу.
+  // Заказ длиннее, чем помещается в ссылку — открываем чат с ботом, он передаст текст продавцу.
   const copied = await copyToClipboard(orderText());
   toast(copied
-    ? 'Заказ скопирован. Вставьте его в чат с продавцом.'
-    : 'Заказ большой — перечислите товары продавцу в чате.');
-  openLink(`https://t.me/${CONFIG.sellerUsername}`);
+    ? 'Заказ скопирован. Вставьте его в чат с ботом — он передаст продавцу.'
+    : 'Заказ большой — перечислите товары в чате с ботом, он передаст продавцу.');
+  openLink(askLink());
 }
 
 document.getElementById('checkoutBtn').addEventListener('click', checkout);
@@ -361,8 +372,8 @@ function cardHTML(product) {
     <article class="card">
       <a class="card__media" href="#/product/${product.id}" aria-label="${product.name}">
         <span class="card__art">№${product.id}</span>
-        <img src="${cover(product)}" alt="${product.name}" loading="lazy">
-        ${second ? `<img class="card__alt" src="${second}" alt="" loading="lazy" aria-hidden="true">` : ''}
+        ${previewImg(cover(product), `alt="${product.name}" loading="lazy" decoding="async"`)}
+        ${second ? previewImg(second, 'class="card__alt" alt="" loading="lazy" decoding="async" aria-hidden="true"') : ''}
       </a>
       <div class="card__body">
         ${product.theme ? `<p class="card__theme">${titleOfTheme(product.theme)}</p>` : ''}
@@ -449,7 +460,7 @@ function wheelItems() {
     .slice(0, WHEEL.size)
     .map((product) => {
       const print = PRINT_ART[product.id];
-      return { product, src: print || cover(product), isPrint: Boolean(print) };
+      return { product, src: print || preview(cover(product)), isPrint: Boolean(print) };
     });
 }
 
@@ -805,13 +816,13 @@ function renderProduct(id) {
   document.getElementById('productBody').innerHTML = `
     <div class="gallery">
       <div class="gallery__main" id="galleryMain">
-        <img src="${images[0]}" alt="${product.name}" id="galleryImage">
+        <img src="${images[0]}" alt="${product.name}" id="galleryImage" fetchpriority="high" decoding="async">
       </div>
       ${images.length > 1 ? `
         <div class="gallery__thumbs" id="galleryThumbs">
           ${images.map((src, i) => `
             <button class="thumb" type="button" data-index="${i}" aria-current="${i === 0}">
-              <img src="${src}" alt="Фото ${i + 1}" loading="lazy">
+              ${previewImg(src, `alt="Фото ${i + 1}" loading="lazy" decoding="async"`)}
             </button>`).join('')}
         </div>` : ''}
     </div>
@@ -997,9 +1008,9 @@ function boot() {
   renderCartBadge();
   buildFilterControls();
 
-  const sellerLink = `https://t.me/${CONFIG.sellerUsername}`;
-  document.getElementById('aboutContact').href = sellerLink;
-  document.getElementById('footerContact').href = sellerLink;
+  const contactLink = askLink();
+  document.getElementById('aboutContact').href = contactLink;
+  document.getElementById('footerContact').href = contactLink;
 
   route();
 }

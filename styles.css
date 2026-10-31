@@ -823,13 +823,15 @@ button, input, select, textarea {
 
 .product {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-  gap: 48px;
+  /* фото товара — компактное, не на весь экран: до 460 px в ширину */
+  grid-template-columns: minmax(0, 460px) minmax(0, 520px);
+  justify-content: start;   /* по левому краю, как хлебные крошки и заголовки */
+  gap: 56px;
   align-items: start;
   padding-bottom: 40px;
 }
 
-.gallery { display: grid; gap: 12px; }
+.gallery { display: grid; gap: 12px; width: 100%; max-width: 460px; }
 
 .gallery__main {
   border: 2px solid var(--frame-strong);
@@ -904,6 +906,7 @@ button, input, select, textarea {
 
 .stepper {
   display: inline-flex;
+  justify-self: start;   /* не растягиваться на всю ширину — заканчивается после «+» */
   align-items: center;
   border: 2px solid var(--frame);
 }

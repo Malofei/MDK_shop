@@ -33,8 +33,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/prints/berserk1.png",
-      "images/prints/berserk2.png"
+      "images/prints/berserk1.webp",
+      "images/prints/berserk2.webp"
     ],
   },
   {
@@ -51,8 +51,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/prints/griffith1.png",
-      "images/prints/griffith2.png"
+      "images/prints/griffith1.webp",
+      "images/prints/griffith2.webp"
     ],
   },
   {
@@ -69,8 +69,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/prints/berserk_2_1.png",
-      "images/prints/berserk_2_2.png"
+      "images/prints/berserk_2_1.webp",
+      "images/prints/berserk_2_2.webp"
     ],
   },
   {
@@ -87,8 +87,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/prints/witcher1.png",
-      "images/prints/witcher2.png"
+      "images/prints/witcher1.webp",
+      "images/prints/witcher2.webp"
     ],
   },
   {
@@ -105,8 +105,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/prints/dmc1.png",
-      "images/prints/dmc2.png"
+      "images/prints/dmc1.webp",
+      "images/prints/dmc2.webp"
     ],
   },
   {
@@ -123,8 +123,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/prints/higuruma1.png",
-      "images/prints/higuruma2.png"
+      "images/prints/higuruma1.webp",
+      "images/prints/higuruma2.webp"
     ],
   },
   {
@@ -141,8 +141,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/prints/toji1.png",
-      "images/prints/toji2.png"
+      "images/prints/toji1.webp",
+      "images/prints/toji2.webp"
     ],
   },
   {
@@ -159,8 +159,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/prints/zoro1.png",
-      "images/prints/zoro2.png"
+      "images/prints/zoro1.webp",
+      "images/prints/zoro2.webp"
     ],
   },
   {
@@ -177,10 +177,10 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/prints/berserk_3_1.png",
-      "images/prints/berserk_3_2.png",
-      "images/prints/berserk_3_3.png",
-      "images/prints/berserk_3_4.png"
+      "images/prints/berserk_3_1.webp",
+      "images/prints/berserk_3_2.webp",
+      "images/prints/berserk_3_3.webp",
+      "images/prints/berserk_3_4.webp"
     ],
   },
   {
@@ -197,10 +197,10 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/prints/berserk_4_1.png",
-      "images/prints/berserk_4_2.png",
-      "images/prints/berserk_4_3.png",
-      "images/prints/berserk_4_4.png"
+      "images/prints/berserk_4_1.webp",
+      "images/prints/berserk_4_2.webp",
+      "images/prints/berserk_4_3.webp",
+      "images/prints/berserk_4_4.webp"
     ],
   },
   {
@@ -217,9 +217,9 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/prints/hollow1.png",
-      "images/prints/hollow2.png",
-      "images/prints/hollow3.png"
+      "images/prints/hollow1.webp",
+      "images/prints/hollow2.webp",
+      "images/prints/hollow3.webp"
     ],
   },
   {
@@ -236,8 +236,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/prints/ace1.png",
-      "images/prints/ace2.png"
+      "images/prints/ace1.webp",
+      "images/prints/ace2.webp"
     ],
   },
   {
@@ -254,8 +254,8 @@ const PRODUCTS = [
       "XXL"
     ],
     images: [
-      "images/prints/luffy1.png",
-      "images/prints/luffy2.png"
+      "images/prints/luffy1.webp",
+      "images/prints/luffy2.webp"
     ],
   },
 ];
