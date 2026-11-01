@@ -141,10 +141,17 @@ button, input, select, textarea {
 
 .wordmark {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   gap: 8px;
   text-decoration: none;
   flex-shrink: 0;
+}
+
+.wordmark__logo {
+  display: block;
+  height: 44px;
+  width: auto;
+  border-radius: 6px;   /* у логотипа свой тёмный фон — на светлой теме он смотрится плашкой */
 }
 
 .wordmark__mark {
@@ -1142,11 +1149,15 @@ button, input, select, textarea {
   padding: 34px 0 calc(34px + env(safe-area-inset-bottom, 0));
 }
 .footer__mark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-display);
   font-weight: 800;
   letter-spacing: -.03em;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
+.footer__mark img { height: 40px; width: auto; border-radius: 6px; }
 .footer__line { color: var(--muted); font-size: var(--fs-sm); }
 .footer__nav { display: flex; flex-wrap: wrap; gap: 18px; font-size: var(--fs-sm); }
 .footer__nav a { color: var(--muted); text-decoration: none; }
