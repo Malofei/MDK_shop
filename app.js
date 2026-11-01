@@ -52,7 +52,47 @@ const previewImg = (src, attrs = '') =>
   `<img src="${preview(src)}" data-full="${src}" ${attrs} onerror="if(this.dataset.full&&this.src.indexOf(this.dataset.full)<0){this.src=this.dataset.full}">`;
 
 // «Написать в Telegram» открывает бота: он передаёт вопрос продавцу, ответ приходит туда же.
-const askLink = () => `https://t.me/${CONFIG.botUsername}?start=ask`;
+// С номером товара (ask-7) продавец сразу видит, о какой вещи вопрос.
+const askLink = (productId) =>
+  `https://t.me/${CONFIG.botUsername}?start=ask${productId ? '-' + productId : ''}`;
+
+/* ============ ТАБЛИЦА РАЗМЕРОВ (футболки) ============ */
+// Замеры изделия в разложенном виде, см. Погрешность ±2 см.
+const TSHIRT_SIZE_CHART = [
+  { size: '2XS', ru: '40–42', width: 44, length: 64 },
+  { size: 'XS',  ru: '42–44', width: 46, length: 66 },
+  { size: 'S',   ru: '44–46', width: 48, length: 68 },
+  { size: 'M',   ru: '46–48', width: 50, length: 70 },
+  { size: 'L',   ru: '48–50', width: 52, length: 72 },
+  { size: 'XL',  ru: '50–52', width: 54, length: 74 },
+  { size: '2XL', ru: '52–54', width: 57, length: 76 },
+  { size: '3XL', ru: '56–58', width: 60, length: 78 },
+  { size: '4XL', ru: '60–62', width: 65, length: 80 },
+];
+
+// XXL и 2XL — один размер; приводим к виду из таблицы.
+const normSize = (s) => String(s).toUpperCase().replace(/^(X+)(S|L)$/, (m, xs, end) =>
+  xs.length > 1 ? `${xs.length}X${end}` : m);
+
+function sizeChartHTML(product) {
+  if (product.category !== 'tshirts') return '';
+  const offered = new Set((product.sizes || []).map(normSize));
+  const rows = TSHIRT_SIZE_CHART.filter((r) => !offered.size || offered.has(r.size));
+  if (!rows.length) return '';
+  return `
+        <details>
+          <summary>Таблица размеров</summary>
+          <div class="sizechart">
+            <table>
+              <thead><tr><th>Размер</th><th>Рос.</th><th>Ширина, см</th><th>Длина, см</th></tr></thead>
+              <tbody>
+                ${rows.map((r) => `<tr><td>${r.size}</td><td>${r.ru}</td><td>${r.width}</td><td>${r.length}</td></tr>`).join('')}
+              </tbody>
+            </table>
+            <p>Ширина — по груди от шва до шва, длина — от плеча до низа. Погрешность ±2 см. Сравните с футболкой, которая хорошо сидит.</p>
+          </div>
+        </details>`;
+}
 
 /* ============ TELEGRAM ============ */
 const tg = window.Telegram?.WebApp;
@@ -852,12 +892,13 @@ function renderProduct(id) {
       </div>
 
       <button class="btn btn--solid btn--block" type="button" id="addBtn">Добавить в корзину</button>
+      <a class="btn btn--ghost btn--block" id="askBtn" href="${askLink(product.id)}" target="_blank" rel="noopener">Спросить про этот товар</a>
 
       <div class="details">
         <details open>
           <summary>Ткань и посадка</summary>
           <p>${categoryInfo || 'Хлопок, плотная ткань, прямой крой.'}</p>
-        </details>
+        </details>${sizeChartHTML(product)}
         <details>
           <summary>Доставка</summary>
           <p>По ${CONFIG.city} доставка уже включена в цену. По России считаем отдельно — обсудим в переписке.</p>
@@ -907,6 +948,10 @@ function renderProduct(id) {
 
   document.getElementById('addBtn').addEventListener('click', () => {
     addToCart(product.id, chosenSize, qty);
+  });
+  document.getElementById('askBtn').addEventListener('click', (event) => {
+    event.preventDefault();
+    openLink(askLink(product.id));
   });
 
   // похожие

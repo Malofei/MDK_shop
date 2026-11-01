@@ -942,6 +942,20 @@ button, input, select, textarea {
 .details summary::-webkit-details-marker { display: none; }
 .details summary::after { content: "+"; font-size: 1.2rem; color: var(--muted); }
 .details details[open] summary::after { content: "–"; }
+.sizechart { padding-bottom: 16px; overflow-x: auto; }
+.sizechart table {
+  width: 100%;
+  max-width: 420px;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums;
+}
+.sizechart th,
+.sizechart td { padding: 7px 10px; text-align: center; border: 1px solid var(--frame); }
+.sizechart th { font-weight: 600; background: var(--panel-2); }
+.sizechart td:first-child { font-weight: 700; }
+.sizechart p { padding: 10px 0 0; }
+
 .details p {
   padding-bottom: 16px;
   color: var(--muted);
