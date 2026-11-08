@@ -1,6 +1,6 @@
 // products.js
 // Каталог MDK Shop.
-// Файл сгенерирован ботом 20.09.2026 14:49. Правки удобнее делать через бота:
+// Файл сгенерирован ботом 09.11.2026 02:28. Правки удобнее делать через бота:
 // он пересоберёт этот файл целиком и приложит картинки.
 
 const CATEGORIES = [
@@ -24,7 +24,7 @@ const PRODUCTS = [
     name: "Футболка Berserk 1",
     category: "tshirts",
     theme: "berserk",
-    price: 4600,
+    price: 3200,
     sizes: [
       "S",
       "M",
@@ -60,7 +60,7 @@ const PRODUCTS = [
     name: "Футболка Berserk 3",
     category: "tshirts",
     theme: "berserk",
-    price: 3600,
+    price: 3000,
     sizes: [
       "S",
       "M",
@@ -78,7 +78,7 @@ const PRODUCTS = [
     name: "Футболка Ведьмак",
     category: "tshirts",
     theme: "witcher",
-    price: 4000,
+    price: 3000,
     sizes: [
       "S",
       "M",
