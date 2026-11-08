@@ -150,7 +150,7 @@ const PRODUCTS = [
     name: "Футболка Zoro",
     category: "tshirts",
     theme: "one-piece",
-    price: 4500,
+    price: 3000,
     sizes: [
       "S",
       "M",
