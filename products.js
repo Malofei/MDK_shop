@@ -114,7 +114,7 @@ const PRODUCTS = [
     name: "Футболка Hiromi Higuruma",
     category: "tshirts",
     theme: "jujutsu",
-    price: 4500,
+    price: 3000,
     sizes: [
       "S",
       "M",
