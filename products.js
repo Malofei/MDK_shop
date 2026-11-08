@@ -132,7 +132,7 @@ const PRODUCTS = [
     name: "Футболка Toji",
     category: "tshirts",
     theme: "jujutsu",
-    price: 4500,
+    price: 3200,
     sizes: [
       "S",
       "M",
