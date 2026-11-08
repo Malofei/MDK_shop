@@ -53,10 +53,6 @@ const previewImg = (src, attrs = '') =>
 
 // «Написать в Telegram» открывает бота: он передаёт вопрос продавцу, ответ приходит туда же.
 // С номером товара (ask-7) продавец сразу видит, о какой вещи вопрос.
-// Ссылка «поделиться» ведёт на визитку товара p/<id>/: у неё свои мета-теги, поэтому
-// в Telegram, ВК и Discord видно фото и цену именно этой вещи (визитки собирает бот).
-const shareLink = (productId) => new URL(`p/${productId}/`, location.href.split('#')[0]).href;
-
 const askLink = (productId) =>
   `https://t.me/${CONFIG.botUsername}?start=ask${productId ? '-' + productId : ''}`;
 
@@ -896,10 +892,7 @@ function renderProduct(id) {
       </div>
 
       <button class="btn btn--solid btn--block" type="button" id="addBtn">Добавить в корзину</button>
-      <div class="buybox__row">
-        <a class="btn btn--ghost" id="askBtn" href="${askLink(product.id)}" target="_blank" rel="noopener">Спросить про товар</a>
-        <button class="btn btn--ghost" type="button" id="shareBtn">Поделиться</button>
-      </div>
+      <a class="btn btn--ghost btn--block" id="askBtn" href="${askLink(product.id)}" target="_blank" rel="noopener">Спросить про этот товар</a>
 
       <div class="details">
         <details open>
@@ -956,16 +949,6 @@ function renderProduct(id) {
   document.getElementById('addBtn').addEventListener('click', () => {
     addToCart(product.id, chosenSize, qty);
   });
-  document.getElementById('shareBtn').addEventListener('click', async () => {
-    const url = shareLink(product.id);
-    if (navigator.share && matchMedia('(pointer: coarse)').matches) {
-      try { await navigator.share({ title: product.name, url }); return; } catch (_) { /* закрыли окно — скопируем */ }
-    }
-    toast(await copyToClipboard(url)
-      ? 'Ссылка скопирована — в мессенджере будет фото и цена'
-      : url);
-  });
-
   document.getElementById('askBtn').addEventListener('click', (event) => {
     event.preventDefault();
     openLink(askLink(product.id));

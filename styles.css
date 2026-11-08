@@ -275,9 +275,6 @@ button, input, select, textarea {
 .btn--ghost:hover { background: var(--panel-2); }
 
 .btn--block { width: 100%; }
-
-.buybox__row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.buybox__row .btn { padding-inline: 10px; }
 .btn:active { transform: translateY(1px); }
 .btn[disabled] { opacity: .45; cursor: not-allowed; transform: none; }
 
