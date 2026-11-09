@@ -74,6 +74,10 @@ body {
 
 body.is-locked { overflow: hidden; }
 
+/* страховка: ничто внутри страницы не должно делать её шире экрана.
+   clip, а не hidden — так не ломается «липкий» блок покупки на странице товара */
+#main { overflow-x: clip; }
+
 img { max-width: 100%; display: block; }
 a { color: inherit; }
 
@@ -301,7 +305,8 @@ button, input, select, textarea {
 .hero::before {
   content: "";
   position: absolute;
-  inset: -40px -50vw 20px -50vw;
+  /* фон в точку — от края до края экрана, но не шире него (иначе на телефоне страница уезжает вбок) */
+  inset: -40px calc((100% - 100vw) / 2) 20px;
   background-image: radial-gradient(var(--tone) 1.4px, transparent 1.5px);
   background-size: 11px 11px;
   -webkit-mask-image: linear-gradient(180deg, transparent, #000 35%, transparent 95%);
