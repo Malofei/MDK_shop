@@ -437,10 +437,6 @@ button, input, select, textarea {
 }
 .wheel__slot.is-active .wheel__print { transform: scale(1.14); }
 
-/* запасной вариант, пока нет принта: целая футболка, чуть крупнее */
-.wheel__print.is-photo { transform: scale(1.25); }
-.wheel__slot.is-active .wheel__print.is-photo { transform: scale(1.4); }
-
 .wheel__hit { fill: transparent; pointer-events: all; }
 
 .wheel__hub-bg {

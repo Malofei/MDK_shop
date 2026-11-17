@@ -476,7 +476,7 @@ document.addEventListener('click', (event) => {
 
 /* ============ КОЛЕСО ПРИНТОВ ============
    Радиальное меню, как «колесо навыков» в играх: пять секторов — пять последних
-   футболок. Секторы выбираются наведением, тапом или клавиатурой; в центре
+   футболок с отдельным принтом в art.js. Секторы выбираются наведением, тапом или клавиатурой; в центре
    показывается выбранная вещь. Геометрия считается в координатах viewBox 600×600. */
 const WHEEL = {
   size: 5,               // сколько принтов в колесе
@@ -496,12 +496,12 @@ let stopWheel = () => {};
 function wheelItems() {
   return ITEMS
     .filter((p) => !WHEEL.category || p.category === WHEEL.category)
+    // Фото товара не заменяет принт: у него могут быть фон и сама футболка.
+    // Отбираем до slice, чтобы заполнить колесо более ранними готовыми принтами.
+    .filter((p) => typeof PRINT_ART[p.id] === 'string' && PRINT_ART[p.id].trim())
     .sort((a, b) => b.id - a.id)                 // новые — первыми
     .slice(0, WHEEL.size)
-    .map((product) => {
-      const print = PRINT_ART[product.id];
-      return { product, src: print || preview(cover(product)), isPrint: Boolean(print) };
-    });
+    .map((product) => ({ product, src: PRINT_ART[product.id].trim() }));
 }
 
 const polar = (r, deg) => {
@@ -529,7 +529,7 @@ function wheelHTML(items) {
   const c = WHEEL.center;
   const box = WHEEL.printSize;
 
-  const slots = items.map(({ product, src, isPrint }, i) => {
+  const slots = items.map(({ product, src }, i) => {
     const mid = -90 + step * i;                      // первый сектор — сверху, дальше по часовой
     const rad = (mid * Math.PI) / 180;
     const [px, py] = polar(mid0, mid);
@@ -543,7 +543,7 @@ function wheelHTML(items) {
               <path class="wheel__wedge" d="${wedgePath(mid, half, WHEEL.inner, WHEEL.outer, WHEEL.gap)}"/>
               <path class="wheel__tone" d="${wedgePath(mid, half, WHEEL.inner, WHEEL.outer, WHEEL.gap)}" fill="url(#wheelDots)"/>
               <circle class="wheel__glow" cx="${px.toFixed(2)}" cy="${py.toFixed(2)}" r="${box * 0.64}" fill="url(#wheelGlow)"/>
-              <image class="wheel__print${isPrint ? '' : ' is-photo'}" href="${src}"
+              <image class="wheel__print" href="${src}"
                      x="${(px - box / 2).toFixed(2)}" y="${(py - box / 2).toFixed(2)}" width="${box}" height="${box}"
                      preserveAspectRatio="xMidYMid meet"/>
             </g>
