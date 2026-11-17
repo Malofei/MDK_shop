@@ -437,6 +437,11 @@ button, input, select, textarea {
 }
 .wheel__slot.is-active .wheel__print { transform: scale(1.14); }
 
+/* Фото новой вещи не увеличиваем, как прозрачный принт: оно целиком вписано
+   в сектор и ограничено SVG clipPath даже при наведении и нажатии. */
+.wheel__print.is-photo,
+.wheel__slot.is-active .wheel__print.is-photo { transform: none; }
+
 .wheel__hit { fill: transparent; pointer-events: all; }
 
 .wheel__hub-bg {

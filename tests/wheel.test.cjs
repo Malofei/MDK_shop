@@ -12,6 +12,8 @@ function wheel(products, prints) {
   const context = vm.createContext({
     ITEMS: products,
     PRINT_ART: prints,
+    cover: product => product.images[0],
+    preview: src => src.replace('images/prints/', 'images/prints/sm/'),
     titleOfTheme: () => 'Collection',
     money: value => `${value} RUB`,
   });
@@ -26,20 +28,22 @@ function product(id, category = 'tshirts') {
   return { id, category, name: `Shirt ${id}`, price: 3500, images: [`images/prints/shirt-${id}.webp`] };
 }
 
-test('a new shirt without separate artwork does not put its product photo in the wheel', () => {
+test('a new shirt without separate artwork is the first item in the wheel', () => {
   const products = Array.from({ length: 8 }, (_, i) => product(i + 1));
   const prints = Object.fromEntries(products.slice(0, 7).map(p => [p.id, `images/prints/art-${p.id}.webp`]));
   const result = wheel(products, prints).items();
-  assert.deepEqual(Array.from(result, item => item.product.id), [7, 6, 5, 4, 3]);
-  assert.ok(result.every(item => item.src === prints[item.product.id]));
+  assert.deepEqual(Array.from(result, item => item.product.id), [8, 7, 6, 5, 4]);
+  assert.equal(result[0].src, 'images/prints/sm/shirt-8.webp');
+  assert.equal(result[0].isPrint, false);
+  assert.ok(result.slice(1).every(item => item.src === prints[item.product.id] && item.isPrint));
   assert.equal(products.length, 8);
   assert.deepEqual(products.map(p => p.id), [1, 2, 3, 4, 5, 6, 7, 8]);
 });
 
-test('five prepared artworks are selected even when newer products have no artwork', () => {
+test('new products stay in the wheel even when none has separate artwork', () => {
   const products = Array.from({ length: 10 }, (_, i) => product(i + 1));
   const prints = Object.fromEntries(products.slice(0, 5).map(p => [p.id, `art-${p.id}.webp`]));
-  assert.deepEqual(Array.from(wheel(products, prints).items(), x => x.product.id), [5, 4, 3, 2, 1]);
+  assert.deepEqual(Array.from(wheel(products, prints).items(), x => x.product.id), [10, 9, 8, 7, 6]);
 });
 
 test('a new shirt enters the wheel as soon as its separate artwork is supplied', () => {
@@ -53,21 +57,35 @@ test('hoodies and artwork for deleted products do not enter the shirt wheel', ()
   assert.deepEqual(Array.from(result, x => x.product.id), [1]);
 });
 
-test('empty and invalid artwork values never fall back to product photos', () => {
+test('empty and invalid artwork values safely use product photos', () => {
   const result = wheel([product(1), product(2), product(3), product(4)], { 1: '', 2: '  ', 3: null, 4: {} }).items();
-  assert.equal(result.length, 0);
+  assert.equal(result.length, 4);
+  assert.ok(result.every(item => item.src.includes('/sm/') && !item.isPrint));
 });
 
-test('the supplied catalog excludes Doflamingo from the wheel and keeps the product in the store', () => {
+test('Doflamingo remains visible with its photo clipped inside its own sector', () => {
   const context = vm.createContext({window: {}});
   for (const name of ['products.js', 'art.js']) vm.runInContext(fs.readFileSync(path.join(root, name), 'utf8'), context);
   const products = context.window.STORE_DATA.products;
   const current = wheel(products, context.window.PRINT_ART);
   const result = current.items();
-  assert.deepEqual(Array.from(result, x => x.product.id), [13, 12, 11, 8, 7]);
+  assert.deepEqual(Array.from(result, x => x.product.id), [14, 13, 12, 11, 8]);
   assert.ok(products.some(p => p.id === 14));
   const html = current.html(result);
-  assert.equal((html.match(/<image class="wheel__print"/g) || []).length, 5);
-  assert.ok(!html.includes('is-photo'));
-  assert.ok(!html.includes('doflamingo-14-1.webp'));
+  assert.equal((html.match(/<image class="wheel__print/g) || []).length, 5);
+  assert.ok(html.includes('class="wheel__print is-photo"'));
+  assert.ok(html.includes('doflamingo-14-1.webp'));
+  assert.ok(html.includes('clip-path="url(#wheel-photo-clip-0)"'));
+  assert.ok(html.includes('<clipPath id="wheel-photo-clip-0" clipPathUnits="userSpaceOnUse">'));
+  assert.ok(html.includes('href="#/product/14"'));
+});
+
+test('each photo has its own clipping region while prepared prints retain their rendering', () => {
+  const current = wheel([product(1), product(2), product(3)], {1:'one.webp'});
+  const html = current.html(current.items());
+  assert.equal((html.match(/<clipPath /g) || []).length, 2);
+  assert.ok(html.includes('id="wheel-photo-clip-0"'));
+  assert.ok(html.includes('id="wheel-photo-clip-1"'));
+  assert.ok(!html.includes('id="wheel-photo-clip-2"'));
+  assert.ok(html.includes('class="wheel__print" href="one.webp"'));
 });
