@@ -1,6 +1,6 @@
 // products.js
 // Каталог MDK Shop.
-// Файл сгенерирован ботом 09.11.2026 02:30. Правки удобнее делать через бота:
+// Файл сгенерирован ботом 17.11.2026 22:04. Правки удобнее делать через бота:
 // он пересоберёт этот файл целиком и приложит картинки.
 
 const CATEGORIES = [
@@ -24,7 +24,7 @@ const PRODUCTS = [
     name: "Футболка Berserk 1",
     category: "tshirts",
     theme: "berserk",
-    price: 3200,
+    price: 4600,
     sizes: [
       "S",
       "M",
@@ -60,7 +60,7 @@ const PRODUCTS = [
     name: "Футболка Berserk 3",
     category: "tshirts",
     theme: "berserk",
-    price: 3000,
+    price: 3600,
     sizes: [
       "S",
       "M",
@@ -78,7 +78,7 @@ const PRODUCTS = [
     name: "Футболка Ведьмак",
     category: "tshirts",
     theme: "witcher",
-    price: 3000,
+    price: 4000,
     sizes: [
       "S",
       "M",
@@ -96,7 +96,7 @@ const PRODUCTS = [
     name: "Футболка DMC 1",
     category: "tshirts",
     theme: "dmc",
-    price: 3200,
+    price: 4500,
     sizes: [
       "S",
       "M",
@@ -114,7 +114,7 @@ const PRODUCTS = [
     name: "Футболка Hiromi Higuruma",
     category: "tshirts",
     theme: "jujutsu",
-    price: 3000,
+    price: 4500,
     sizes: [
       "S",
       "M",
@@ -132,7 +132,7 @@ const PRODUCTS = [
     name: "Футболка Toji",
     category: "tshirts",
     theme: "jujutsu",
-    price: 3200,
+    price: 4500,
     sizes: [
       "S",
       "M",
@@ -150,7 +150,7 @@ const PRODUCTS = [
     name: "Футболка Zoro",
     category: "tshirts",
     theme: "one-piece",
-    price: 3000,
+    price: 4500,
     sizes: [
       "S",
       "M",
@@ -208,7 +208,7 @@ const PRODUCTS = [
     name: "Футболка Hollow Knight",
     category: "tshirts",
     theme: "hollow",
-    price: 3200,
+    price: 4000,
     sizes: [
       "S",
       "M",
@@ -256,6 +256,24 @@ const PRODUCTS = [
     images: [
       "images/prints/luffy1.webp",
       "images/prints/luffy2.webp"
+    ],
+  },
+  {
+    id: 14,
+    name: "Doflamingo",
+    category: "tshirts",
+    theme: "one-piece",
+    price: 3500,
+    sizes: [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    images: [
+      "images/prints/doflamingo-14-1.webp",
+      "images/prints/doflamingo-14-2.webp"
     ],
   },
 ];
