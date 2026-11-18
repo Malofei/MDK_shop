@@ -63,7 +63,7 @@ test('empty and invalid artwork values safely use product photos', () => {
   assert.ok(result.every(item => item.src.includes('/sm/') && !item.isPrint));
 });
 
-test('Doflamingo remains visible with its photo clipped inside its own sector', () => {
+test('Doflamingo uses the supplied transparent artwork', () => {
   const context = vm.createContext({window: {}});
   for (const name of ['products.js', 'art.js']) vm.runInContext(fs.readFileSync(path.join(root, name), 'utf8'), context);
   const products = context.window.STORE_DATA.products;
@@ -73,11 +73,28 @@ test('Doflamingo remains visible with its photo clipped inside its own sector', 
   assert.ok(products.some(p => p.id === 14));
   const html = current.html(result);
   assert.equal((html.match(/<image class="wheel__print/g) || []).length, 5);
-  assert.ok(html.includes('class="wheel__print is-photo"'));
-  assert.ok(html.includes('doflamingo-14-1.webp'));
-  assert.ok(html.includes('clip-path="url(#wheel-photo-clip-0)"'));
-  assert.ok(html.includes('<clipPath id="wheel-photo-clip-0" clipPathUnits="userSpaceOnUse">'));
+  assert.equal(result[0].src, 'images/prints/doflamingo-wheel.png');
+  assert.equal(result[0].isPrint, true);
+  assert.ok(fs.existsSync(path.join(root, result[0].src)));
+  assert.ok(!html.includes('is-photo'));
   assert.ok(html.includes('href="#/product/14"'));
+});
+
+test('uploaded artwork takes priority and stays out of gallery photos', () => {
+  const p = { ...product(1), wheelImage: ' images/prints/uploaded-wheel.webp ' };
+  const current = wheel([p], {1: 'legacy.webp'});
+  const result = current.items();
+  assert.equal(result[0].src, 'images/prints/uploaded-wheel.webp');
+  assert.equal(result[0].isPrint, true);
+  assert.deepEqual(p.images, ['images/prints/shirt-1.webp']);
+  assert.ok(current.html(result).includes('class="wheel__print" href="images/prints/uploaded-wheel.webp"'));
+});
+
+test('empty uploaded artwork keeps legacy artwork or a product photo', () => {
+  const products = [{...product(1), wheelImage: ' '}, {...product(2), wheelImage: null}];
+  const result = wheel(products, {1:'legacy.webp'}).items();
+  assert.equal(result[0].isPrint, false);
+  assert.equal(result[1].src, 'legacy.webp');
 });
 
 test('each photo has its own clipping region while prepared prints retain their rendering', () => {

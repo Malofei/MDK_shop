@@ -499,8 +499,9 @@ function wheelItems() {
     .sort((a, b) => b.id - a.id)                 // новые — первыми
     .slice(0, WHEEL.size)
     .map((product) => {
+      const uploaded = typeof product.wheelImage === 'string' ? product.wheelImage.trim() : '';
       const art = PRINT_ART[product.id];
-      const print = typeof art === 'string' ? art.trim() : '';
+      const print = uploaded || (typeof art === 'string' ? art.trim() : '');
       return { product, src: print || preview(cover(product)), isPrint: Boolean(print) };
     });
 }
