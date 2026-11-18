@@ -13,8 +13,8 @@
 window.COLLECTION_ART = {
   "berserk":   { src: "images/logos/berserk.webp",   bg: "#0C0A0E" },
   "bleach":    { src: "images/logos/bleach.webp",    bg: "#0C0A0E" },
-  "jujutsu":   { src: "images/logos/jujutsu.webp",   bg: "#EFEAE2", dot: "rgba(22, 21, 26, .09)" },
-  "hollow":    { src: "images/logos/hollow.webp",    bg: "#0C0A0E", fit: "cover", pos: "50% 0%" },
+  "jujutsu":   { src: "images/logos/jujutsu-dark.png", bg: "#0C0A0E", h: "70%" },
+  "hollow":    { src: "images/logos/hollow-dark.png", bg: "#0C0A0E", h: "76%" },
   "dmc":       { src: "images/logos/dmc.webp",       bg: "#0C0A0E" },
   "witcher":   { src: "images/logos/witcher.webp",   bg: "#0C0A0E", h: "74%" },
   "one-piece": { src: "images/logos/one-piece.webp", bg: "#0C0A0E" },
